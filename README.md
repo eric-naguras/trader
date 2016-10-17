@@ -24,6 +24,31 @@ that runs on Ubuntu 14.04 Desktop
 You can download the packaged app here:
 https://www.dropbox.com/s/7dhe1r5grypn8cu/trader-linux-x64.zip?dl=0
 
-and a screenshot seeing the app running here: 
+and a screenshot seeing the app running here:
 https://www.dropbox.com/s/j40au7biouisfti/Screenshot_17_10_2016__8_25_PM.jpg?dl=0
 
+### Build
+Build the image manually:
+
+    docker build -t mycompany/myimage .
+
+
+### Run container
+
+Foregroud:
+
+    docker run \
+      -ti \
+      --name myname \
+      mycompany/myimage
+
+Background:
+
+    docker run \
+      -d \
+      --name myname \
+      mycompany/myimage
+
+Attach to logs:
+
+    docker logs -f myname
