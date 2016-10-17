@@ -19,3 +19,11 @@ $ npm start
 
 The included Dockerfile is an example, IT DOES NOT WORK
 
+I have also a packaged app for Linux.
+that runs on Ubuntu 14.04 Desktop
+You can download the packaged app here:
+https://www.dropbox.com/s/7dhe1r5grypn8cu/trader-linux-x64.zip?dl=0
+
+and a screenshot seeing the app running here: 
+https://www.dropbox.com/s/j40au7biouisfti/Screenshot_17_10_2016__8_25_PM.jpg?dl=0
+
