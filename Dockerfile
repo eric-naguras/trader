@@ -1,23 +1,28 @@
-FROM node:6.6.0-wheezy
+FROM million12/centos-supervisor
 
-MAINTAINER Eric Dela Cruz <eric@naguras.com>
+MAINTAINER Eric Dela Cruz <eric@naguras.com>, Przemyslaw Ozgo <przemek@m12.io>
 
-RUN apt-get update &&\
-   apt-get install -y libgtk2.0-0 libgconf-2-4 \
-   libasound2 libxtst6 libxss1 libnss3 xvfb
+ENV \
+  NVM_DIR=/usr/local/nvm \
+  NODE_VERSION=6.3.0 \
+  PROFILE=/etc/profile.d/nvm.sh
 
-# Create app directory
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+RUN \
+  rpm --rebuilddb && yum clean all && \
+  # yum install -y epel-release && \
+  yum install -y x11vnc gtk2 libXScrnSaver GConf2 alsa-lib xorg-x11-server-utils gnu-free-sans-fonts && \
+  yum clean all
 
-# Install app dependencies
-COPY ./package.json /usr/src/app/
-COPY ./brokers /usr/src/app/
-COPY ./24O.html /usr/src/app/
-COPY ./app.js /usr/src/app/
-COPY ./brokers.json /usr/src/app/
-COPY ./main.js /usr/src/app/
+# Add container files
+COPY container-files /
 
-RUN npm install 
+# Install node
+RUN \
+  curl -sSL https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash && \
+  source $NVM_DIR/nvm.sh && \
+  nvm install $NODE_VERSION && \
+  nvm alias default $NODE_VERSION && \
+  nvm use default && \
+  cd /usr/src/app && npm install
 
-CMD Xvfb -ac -screen scrn 1280x2000x24 :9.0 & export DISPLAY=:9.0 && npm start
+CMD ["/bootstrap.sh"]
